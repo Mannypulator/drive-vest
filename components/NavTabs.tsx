@@ -17,18 +17,17 @@ const NavTabs = () => {
 
   return (
     <nav className="bg-white py-2 pt-10">
-      <div className="container mx-auto px-4 flex justify-around space-x-8 overflow-x-auto">
+      <div className="container mx-auto px-4 flex justify-around space-x-4 sm:space-x-8 overflow-x-auto">
         {tabs.map((tab) => (
           <Link
             href="#"
             key={tab}
             onClick={() => setSelectedTab(tab)}
-            className={`whitespace-nowrap px-3 py-2 text-lg font-medium 
-              ${
-                selectedTab === tab
-                  ? "text-[#E6B027]  border-b-2 border-[E6B027]"
-                  : "text-[#0E0E10]"
-              }`}
+            className={`whitespace-nowrap px-3 py-2 text-base sm:text-lg font-medium ${
+              selectedTab === tab
+                ? "text-[#E6B027] border-b-2 border-[#E6B027]"
+                : "text-[#0E0E10]"
+            }`}
           >
             {tab}
             {tab === "More" && (

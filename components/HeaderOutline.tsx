@@ -17,11 +17,11 @@ const poppins = Poppins({
 const HeaderOutline = () => {
   return (
     <div
-      className={`${poppins.className} bg-[#E6B027] flex items-center justify-between text-white text-base px-24`}
+      className={`${poppins.className} bg-[#E6B027] flex flex-col md:flex-row items-center justify-between text-white text-base px-6 md:px-24 py-4 text-center md:text-left`}
     >
-      <p>Welcome to Drive Vest!</p>
-      <div className="flex items-center space-x-6">
-        <div className="flex items-center text-lg">
+      <p className="mb-2 md:mb-0">Welcome to Drive Vest!</p>
+      <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+        <div className="flex items-center text-lg space-x-2">
           <MapPin size={15} />
           <Select>
             <SelectTrigger className="w-[180px] border-0 outline-none focus:ring-0">
@@ -45,7 +45,7 @@ const HeaderOutline = () => {
           </Select>
         </div>
         <div className="flex items-center space-x-3">
-          <MapPin />
+          <MapPin size={15} />
           <p>Post Code 423651</p>
         </div>
       </div>

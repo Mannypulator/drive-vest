@@ -1,4 +1,3 @@
-// components/PropertyListings.js
 import React from "react";
 import PropertyCard from "./PropertyCard";
 import property1 from "@/assets/images/property1.svg";
@@ -58,14 +57,14 @@ const PropertyListings = () => {
   ];
 
   return (
-    <section className="container mx-auto px-4 py-10">
-      <div className="flex justify-between items-center mb-6">
+    <section className="container mx-auto max-w-screen-xl px-4 py-10">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6">
         <h2
-          className={`${poppins.className} text-[28px] font-extrabold text-[#E6B027]`}
+          className={`${poppins.className} text-2xl md:text-[28px] font-extrabold text-[#E6B027] mb-4 md:mb-0`}
         >
           Property for Sale
         </h2>
-        <button className="text-[#E6B027] font-medium flex text-[20px] items-center justify-between">
+        <button className="text-[#E6B027] font-medium flex text-base md:text-[20px] items-center">
           See all <ChevronRight />
         </button>
       </div>

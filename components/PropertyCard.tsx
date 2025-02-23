@@ -44,18 +44,22 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
         {/* Price, Discount, and Love Image on the Same Line */}
         <div className="flex items-center justify-between gap-x-6">
           <div className="flex items-start gap-x-2">
-            <p className="text-xs font-semibold text-[#E6B027]">{price}</p>
-            <p className="text-xs font-semibold text-[#9F9C9C] line-through">
+            <p className="text-xs sm:text-sm font-semibold text-[#E6B027]">
+              {price}
+            </p>
+            <p className="text-xs sm:text-sm font-semibold text-[#9F9C9C] line-through">
               {discount}
             </p>
           </div>
           <Image src={love} width={20} height={20} alt="love" />
         </div>
-        <h3 className="text-xs font-medium text-gray-900 mt-2 mb-4">{title}</h3>
-        <p className="text-xs text-gray-600">
+        <h3 className="text-xs sm:text-sm font-medium text-gray-900 mt-2 mb-4">
+          {title}
+        </h3>
+        <p className="text-xs sm:text-sm text-gray-600">
           {bed} Beds. {bath} Baths
         </p>
-        <p className="text-xs font-medium">{location}</p>
+        <p className="text-xs sm:text-sm font-medium">{location}</p>
       </div>
     </div>
   );

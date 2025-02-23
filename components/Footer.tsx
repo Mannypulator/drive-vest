@@ -18,9 +18,9 @@ const Footer = () => {
     <footer
       className={`${poppins.className} bg-[linear-gradient(219.84deg,_#474747_4.14%,_#222222_44.22%)] text-white mt-8`}
     >
-      <div className="container mx-auto py-8 px-4">
-        <div className="grid grid-cols-1 md:grid-cols-5 font-normal text-lg">
-          <div>
+      <div className="container mx-auto py-8 px-2 sm:px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 font-normal text-lg text-center md:text-left">
+          <div className="flex flex-col items-center md:items-start">
             <Image
               className="mb-6"
               src={logo}
@@ -29,8 +29,7 @@ const Footer = () => {
               alt="drive vest logo"
               priority={true}
             />
-
-            <ul className="flex items-center space-x-2 mb-4">
+            <ul className="flex items-center justify-center md:justify-start space-x-2 mb-4">
               <li>
                 <Globe color="#e9e7e7" />
               </li>
@@ -39,7 +38,7 @@ const Footer = () => {
                 <ChevronDown color="#e9e7e7" />
               </li>
             </ul>
-            <ul className="flex items-center space-x-2">
+            <ul className="flex items-center justify-center md:justify-start space-x-2">
               <li>
                 <Image
                   className="mb-6"
@@ -56,7 +55,7 @@ const Footer = () => {
                   src={xLogo}
                   width={30}
                   height={30}
-                  alt="facebook logo"
+                  alt="x logo"
                   priority={true}
                 />
               </li>
@@ -66,7 +65,7 @@ const Footer = () => {
                   src={skypeLogo}
                   width={30}
                   height={30}
-                  alt="facebook logo"
+                  alt="skype logo"
                   priority={true}
                 />
               </li>
@@ -76,7 +75,7 @@ const Footer = () => {
                   src={instagramLogo}
                   width={30}
                   height={30}
-                  alt="facebook logo"
+                  alt="instagram logo"
                   priority={true}
                 />
               </li>
@@ -86,7 +85,7 @@ const Footer = () => {
                   src={linkedInLogo}
                   width={30}
                   height={30}
-                  alt="facebook logo"
+                  alt="linkedin logo"
                   priority={true}
                 />
               </li>
@@ -134,7 +133,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="mt-8 text-base bg-[linear-gradient(97.73deg,_#E6B027_-6.96%,_#9E8441_23.5%,_#705614_92.79%)] bg-clip-text text-transparent">
+        <div className="mt-8 text-base bg-[linear-gradient(97.73deg,_#E6B027_-6.96%,_#9E8441_23.5%,_#705614_92.79%)] bg-clip-text text-transparent text-center">
           © Drive West 2025. All rights reserved.
         </div>
       </div>
