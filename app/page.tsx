@@ -1,4 +1,3 @@
-import HeaderOutline from "@/components/HeaderOutline";
 import Hero from "@/components/Hero";
 import NavTabs from "@/components/NavTabs";
 import PropertyFilters from "@/components/PropertyFilter";
