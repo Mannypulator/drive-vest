@@ -31,7 +31,6 @@ import { signIn } from "next-auth/react";
 import { signInDefaultValues } from "@/lib/constants";
 import { signInWithCredentials, signUpUser } from "@/lib/actions/user.actions";
 import { useFormStatus } from "react-dom";
-import { useSearchParams } from "next/navigation";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -50,9 +49,6 @@ export function Modals() {
   });
 
   console.log(signUpData);
-
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const { pending } = useFormStatus();
   const amenities: string[] = [
@@ -217,7 +213,6 @@ export function Modals() {
               </div>
             </DialogHeader>
             <div className="space-y-1">
-              <input type="hidden" name="callbackUrl" value={callbackUrl} />
               <div className="flex space-x-4">
                 <div>
                   <Label className="text-xs font-normal text-[#0A0A0B]">
@@ -412,7 +407,7 @@ export function Modals() {
                   Password*
                 </Label>
                 <Input
-                  type="password" 
+                  type="password"
                   id="password"
                   name="password"
                   autoComplete="password"

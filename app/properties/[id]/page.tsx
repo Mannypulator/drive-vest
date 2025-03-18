@@ -8,22 +8,17 @@ import { ArrowLeft } from "lucide-react";
 import PropertyContactForm from "@/components/PropertyContactForm";
 import { getPropertyById } from "@/lib/actions/property.actions";
 import { Property } from "@/types";
+import { notFound } from "next/navigation";
 
-interface PropertyPageProps {
-  params: { id: string };
-}
-
-const PropertyPage = async ({ params }: PropertyPageProps) => {
-  const { id } = await params;
+const PropertyPage = async (props: {
+  params: Promise<{
+    id: string;
+  }>;
+}) => {
+  const { id } = await props.params;
   const property = await getPropertyById(id);
 
-  if (!property) {
-    return (
-      <h1 className="text-center text-2xl font-bold mt-10">
-        Property Not Found
-      </h1>
-    );
-  }
+  if (!property) return notFound();
 
   // Type assertion to match the expected Property type
   const typedProperty = property as unknown as Property;

@@ -1,5 +1,6 @@
 import check from "@/assets/images/check.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -25,9 +26,12 @@ const Hero = () => {
           />
           Reliable, Secured, On Time. Let us handle the property choices.
         </p>
-        <button className="bg-[linear-gradient(97.73deg,_#E6B027_-6.96%,_#9E8441_23.5%,_#705614_92.79%)] text-white px-8 sm:px-12 py-3 sm:py-4 rounded hover:bg-gray-800 text-sm sm:text-base">
+        <Link
+          href="/properties"
+          className="bg-[linear-gradient(97.73deg,_#E6B027_-6.96%,_#9E8441_23.5%,_#705614_92.79%)] text-white px-8 sm:px-12 py-3 sm:py-4 rounded hover:bg-gray-800 text-sm sm:text-base"
+        >
           Discover more properties
-        </button>
+        </Link>
       </div>
     </div>
   );
