@@ -16,7 +16,7 @@ const NavTabs = () => {
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
   return (
-    <nav className="bg-white py-2 pt-10">
+    <nav className="bg-white py-2 pt-16">
       <div className="container mx-auto px-4 flex justify-around space-x-4 sm:space-x-8 overflow-x-auto">
         {tabs.map((tab) => (
           <Link
