@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { signOutUser } from "@/lib/actions/user.actions";
+import { Button } from "./ui/button";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -91,7 +92,11 @@ const LoginHeader = () => {
                 className="cursor-pointer"
                 onClick={() => signOutUser()}
               >
-                Logout
+                <form action={signOutUser} className="outline-none border-none">
+                  <Button className="rounded-[5px] outline-none border-none mx-auto px-4 py-1 text-center shadow-none">
+                    Logout
+                  </Button>
+                </form>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

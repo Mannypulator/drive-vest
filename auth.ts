@@ -102,6 +102,8 @@ export const config = {
               email: user.email,
               role: user.role,
               username: user.username,
+              firstName: user.firstName,
+              lastName: user.lastName,
             };
           }
         }
@@ -212,8 +214,9 @@ export const config = {
       session.user.role = token.role;
       session.user.email = token.email;
       session.user.name = token.username;
-      session.user.firstName = token.user.firstName;
-      session.user.lastName = token.user.lastName;
+      session.user.firstName = token.firstName;
+      session.user.lastName = token.lastName;
+      console.log(session);
 
       if (trigger === "update") {
         session.user.email = user.email;
@@ -224,6 +227,7 @@ export const config = {
     async jwt({ token, user, trigger, session }: any) {
       if (user) {
         console.log(`user:${user}`);
+        console.log(`token:${token}`);
         token.id = user.id;
         token.role = user.role;
         token.username = user.username;
