@@ -18,7 +18,7 @@ import facebook from "@/assets/images/facebook.svg";
 import google from "@/assets/images/google.svg";
 import { Input } from "./ui/input";
 import email from "@/assets/images/email.svg";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -39,6 +39,7 @@ const poppins = Poppins({
 });
 
 export function Modals() {
+  const { activeModal, closeModal, openModal } = useModal();
   const [signInData, signInAction] = useActionState(signInWithCredentials, {
     success: false,
     message: "",
@@ -54,7 +55,25 @@ export function Modals() {
     message: "",
   });
 
-  console.log(signUpData);
+  useEffect(() => {
+    if (addPropertyData.success) {
+      setListingTitle("");
+      setCategory("Apartment");
+      setCountry("");
+      setState("");
+      setCurrency("NGN");
+      setActualPrice("");
+      setDiscountPrice("");
+      setDescription("");
+      setSelectedImages([]);
+      setVideoPreview(null);
+      setVideoError(null);
+      setSelectedAmenities([]);
+
+      // Close the modal
+      closeModal();
+    }
+  }, [addPropertyData.success, closeModal]);
 
   const { pending } = useFormStatus();
   const amenities: string[] = [
@@ -87,7 +106,6 @@ export function Modals() {
 
   const currencies = ["NGN", "USD", "EUR", "GBP", "CAD"];
 
-  const { activeModal, closeModal, openModal } = useModal();
   const [listingTitle, setListingTitle] = useState<string>("");
   const [category, setCategory] = useState<string>("Apartment");
   const [country, setCountry] = useState<string>("");

@@ -9,6 +9,7 @@ import { auth } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import cloudinary from "../cloudinary";
 import { propertyCreateSchema } from "../validators";
+import { redirect } from "next/navigation";
 
 //Get latest properties
 export async function getLatestProperties() {
@@ -168,6 +169,7 @@ export async function addProperty(prevState: unknown, formData: FormData) {
         ownerId: session?.user?.id || "",
       },
     });
+    redirect("/properties");
     return { success: false, message: "successfully added property" };
   } catch (error) {
     console.log(error);
