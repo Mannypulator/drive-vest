@@ -62,8 +62,8 @@ const LoginHeader = () => {
               <Image
                 src={session?.user?.image || defaultProfile}
                 alt="User Avatar"
-                width={40}
-                height={40}
+                width={25}
+                height={25}
                 className="rounded-full"
               />
               <span className="text-black">{session?.user?.name ?? ""}</span>
