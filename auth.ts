@@ -104,6 +104,7 @@ export const config = {
               username: user.username,
               firstName: user.firstName,
               lastName: user.lastName,
+              phone: user.phoneNumber
             };
           }
         }
@@ -216,6 +217,7 @@ export const config = {
       session.user.name = token.username;
       session.user.firstName = token.firstName;
       session.user.lastName = token.lastName;
+      session.user.phone = token.phone;
       console.log(session);
 
       if (trigger === "update") {
@@ -233,6 +235,7 @@ export const config = {
         token.username = user.username;
         token.firstName = user.firstName;
         token.lastName = user.lastName;
+        token.phone = user.phone;
         console.log(token);
       }
 

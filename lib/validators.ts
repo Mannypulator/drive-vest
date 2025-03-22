@@ -45,7 +45,7 @@ const SellerInfoSchema = z.object({
   phone: z.string().optional(),
 });
 
-export const PropertyCreateSchema = z.object({
+export const propertyCreateSchema = z.object({
   name: z.string().min(1, "Name is required"),
   type: z.string().min(1, "Type is required"),
   description: z.string().optional(),

@@ -8,7 +8,6 @@ import {
   MapPin as MapMarker,
 } from "lucide-react";
 
-
 const PropertyDetails = ({ property }: { property?: Property }) => {
   return (
     <main>
@@ -92,7 +91,21 @@ const PropertyDetails = ({ property }: { property?: Property }) => {
         </ul>
       </div>
       <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-        {/* Display video of property */}
+        <h3 className="text-lg font-bold mb-6">Property Tour</h3>
+        {property?.videoUrl ? (
+          <video
+            className="w-full rounded-lg"
+            controls
+            poster={property.images?.[0]} // Optional: shows thumbnail from first image
+          >
+            <source src={property.videoUrl} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <p className="text-gray-500 italic">
+            No video tour available for this property.
+          </p>
+        )}
       </div>
     </main>
   );

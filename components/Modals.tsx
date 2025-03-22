@@ -31,6 +31,7 @@ import { signIn } from "next-auth/react";
 import { signInDefaultValues } from "@/lib/constants";
 import { signInWithCredentials, signUpUser } from "@/lib/actions/user.actions";
 import { useFormStatus } from "react-dom";
+import { addProperty } from "@/lib/actions/property.actions";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -44,6 +45,11 @@ export function Modals() {
   });
 
   const [signUpData, signUpAction] = useActionState(signUpUser, {
+    success: false,
+    message: "",
+  });
+
+  const [addPropertyData, addPropertyAction] = useActionState(addProperty, {
     success: false,
     message: "",
   });
@@ -142,23 +148,23 @@ export function Modals() {
     setVideoPreview(null);
   };
 
-  // Handle Form Submission
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    const formData = {
-      listingTitle,
-      category,
-      country,
-      state,
-      actualPrice,
-      discountPrice,
-      description,
-      selectedImages,
-      selectedAmenities,
-    };
-    console.log("Form Data Submitted:", formData);
-    closeModal();
-  };
+  // // Handle Form Submission
+  // const handleSubmit = (event: React.FormEvent) => {
+  //   event.preventDefault();
+  //   const formData = {
+  //     listingTitle,
+  //     category,
+  //     country,
+  //     state,
+  //     actualPrice,
+  //     discountPrice,
+  //     description,
+  //     selectedImages,
+  //     selectedAmenities,
+  //   };
+  //   console.log("Form Data Submitted:", formData);
+  //   closeModal();
+  // };
 
   return (
     <>
@@ -565,14 +571,16 @@ export function Modals() {
 
           {/* Form */}
           <form
+            action={addPropertyAction}
             className={`${poppins.className} mt-4 space-y-4`}
-            onSubmit={handleSubmit}
           >
             {/* Listing Title */}
             <div>
               <Label>Listing Name</Label>
               <Input
                 type="text"
+                id="listingTitle"
+                name="listingTitle"
                 placeholder="Write a descriptive title"
                 className="w-full rounded-[5px] placeholder:text-[#C4C4C4] placeholder:text-xs"
                 value={listingTitle}
@@ -585,8 +593,9 @@ export function Modals() {
             <div>
               <Label>Select Category</Label>
               <Select
+                name="category"
                 onValueChange={(value) => setCategory(value)}
-                defaultValue="Apartment"
+                defaultValue={category}
               >
                 <SelectTrigger className="w-full border rounded-[5px]">
                   <SelectValue placeholder="Apartment" />
@@ -605,6 +614,7 @@ export function Modals() {
             <div>
               <Label>Country</Label>
               <Input
+                name="country"
                 type="text"
                 placeholder="Enter country"
                 className="w-full bg-white placeholder:text-[#C4C4C4] placeholder:text-xs rounded-[5px]"
@@ -619,6 +629,7 @@ export function Modals() {
               <Label>Select State/Province</Label>
               <Input
                 type="text"
+                name="state"
                 placeholder="Enter state/province"
                 className="w-full placeholder:text-[#C4C4C4] placeholder:text-xs rounded-[5px]"
                 value={state}
@@ -633,6 +644,7 @@ export function Modals() {
               <div className="col-span-2">
                 <br />
                 <Select
+                  name="currency"
                   onValueChange={(value) => setCurrency(value)}
                   defaultValue={currency}
                 >
@@ -653,6 +665,7 @@ export function Modals() {
               <div className="col-span-4">
                 <Label className={`${poppins.className}`}>Actual Price</Label>
                 <Input
+                  name="actualPrice"
                   className="placeholder:text-[#C4C4C4] placeholder:text-xs rounded-[5px]"
                   type="number"
                   placeholder="Enter price"
@@ -666,6 +679,7 @@ export function Modals() {
               <div className="col-span-4">
                 <Label>Discount Price</Label>
                 <Input
+                  name="discountPrice"
                   className="placeholder:text-[#C4C4C4] placeholder:text-xs rounded-[5px]"
                   type="number"
                   placeholder="Enter discount price"
@@ -680,6 +694,7 @@ export function Modals() {
             <div>
               <Label>Description</Label>
               <textarea
+                name="description"
                 placeholder="Type a detailed description of the listing"
                 className="w-full border p-2 h-24 placeholder:text-[#C4C4C4] placeholder:text-xs rounded-[5px]"
                 value={description}
@@ -695,6 +710,7 @@ export function Modals() {
                 <label className="w-20 h-20 bg-[#F8E8BF] flex items-center justify-center cursor-pointer border-none outline-none rounded-[15px]">
                   +
                   <input
+                    name="images"
                     type="file"
                     className="hidden"
                     multiple
@@ -731,6 +747,7 @@ export function Modals() {
                 <label className="w-20 h-20 bg-[#F8E8BF] flex items-center justify-center cursor-pointer border-none outline-none rounded-[15px]">
                   +
                   <input
+                    name="video"
                     type="file"
                     className="hidden"
                     accept="video/mp4, video/mov, video/avi, video/mkv"
@@ -778,6 +795,11 @@ export function Modals() {
                     >
                       {amenity}
                     </Label>
+
+                    {/* 🔹 Hidden input that is conditionally rendered if checked */}
+                    {selectedAmenities.includes(amenity) && (
+                      <input type="hidden" name="amenities" value={amenity} />
+                    )}
                   </div>
                 ))}
               </div>
@@ -786,7 +808,7 @@ export function Modals() {
             {/* Submit Button */}
             <DialogFooter>
               <Button
-                type="submit"
+                disabled={pending}
                 className="w-full bg-[#E6B027] text-white rounded-[5px]"
               >
                 Submit
