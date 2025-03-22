@@ -19,6 +19,7 @@ import google from "@/assets/images/google.svg";
 import { Input } from "./ui/input";
 import email from "@/assets/images/email.svg";
 import { useActionState, useEffect, useState } from "react";
+import { Country, ICountry, IState, State } from "country-state-city";
 import {
   Select,
   SelectContent,
@@ -108,6 +109,8 @@ export function Modals() {
 
   const [listingTitle, setListingTitle] = useState<string>("");
   const [category, setCategory] = useState<string>("Apartment");
+  const [countries, setCountries] = useState<ICountry[]>([]);
+  const [states, setStates] = useState<IState[]>([]);
   const [country, setCountry] = useState<string>("");
   const [state, setState] = useState<string>("");
   const [currency, setCurrency] = useState("NGN");
@@ -117,6 +120,20 @@ export function Modals() {
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [selectedAmenities, setSelectedAmenities] =
     useState<string[]>(amenities);
+
+  useEffect(() => {
+    setCountries(Country.getAllCountries());
+  }, []);
+
+  useEffect(() => {
+    const selectedCountry = countries.find((c) => c.name === country);
+    if (selectedCountry) {
+      const statesOfCountry = State.getStatesOfCountry(selectedCountry.isoCode);
+      setStates(statesOfCountry);
+    } else {
+      setStates([]);
+    }
+  }, [country, countries]);
 
   const [videoPreview, setVideoPreview] = useState<string | null>(null);
   const [videoError, setVideoError] = useState<string | null>(null);
@@ -166,23 +183,27 @@ export function Modals() {
     setVideoPreview(null);
   };
 
-  // // Handle Form Submission
-  // const handleSubmit = (event: React.FormEvent) => {
-  //   event.preventDefault();
-  //   const formData = {
-  //     listingTitle,
-  //     category,
-  //     country,
-  //     state,
-  //     actualPrice,
-  //     discountPrice,
-  //     description,
-  //     selectedImages,
-  //     selectedAmenities,
-  //   };
-  //   console.log("Form Data Submitted:", formData);
-  //   closeModal();
-  // };
+  const formatNumber = (value: string): string => {
+    const number = parseFloat(value.replace(/,/g, ""));
+    if (isNaN(number)) return "";
+    return new Intl.NumberFormat().format(number);
+  };
+
+  const handleActualPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value.replace(/,/g, "");
+    if (/^\d*$/.test(rawValue)) {
+      setActualPrice(formatNumber(rawValue));
+    }
+  };
+
+  const handleDiscountPriceChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const rawValue = e.target.value.replace(/,/g, "");
+    if (/^\d*$/.test(rawValue)) {
+      setDiscountPrice(formatNumber(rawValue));
+    }
+  };
 
   return (
     <>
@@ -631,29 +652,44 @@ export function Modals() {
             {/* Country Input Field */}
             <div>
               <Label>Country</Label>
-              <Input
+              <Select
                 name="country"
-                type="text"
-                placeholder="Enter country"
-                className="w-full bg-white placeholder:text-[#C4C4C4] placeholder:text-xs rounded-[5px]"
+                onValueChange={(val: string) => setCountry(val)}
                 value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                required
-              />
+              >
+                <SelectTrigger className="w-full border rounded-[5px]">
+                  <SelectValue placeholder="Select country" />
+                </SelectTrigger>
+                <SelectContent className="bg-white rounded-[5px] max-h-64 overflow-y-auto">
+                  {countries.map((c) => (
+                    <SelectItem key={c.isoCode} value={c.name}>
+                      {c.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* State/Province */}
             <div>
-              <Label>Select State/Province</Label>
-              <Input
-                type="text"
+              <Label>State</Label>
+              <Select
                 name="state"
-                placeholder="Enter state/province"
-                className="w-full placeholder:text-[#C4C4C4] placeholder:text-xs rounded-[5px]"
+                onValueChange={(val: string) => setState(val)}
                 value={state}
-                onChange={(e) => setState(e.target.value)}
-                required
-              />
+                disabled={!states.length}
+              >
+                <SelectTrigger className="w-full border rounded-[5px]">
+                  <SelectValue placeholder="Select state" />
+                </SelectTrigger>
+                <SelectContent className="bg-white rounded-[5px] max-h-64 overflow-y-auto">
+                  {states.map((s) => (
+                    <SelectItem key={s.isoCode} value={s.name}>
+                      {s.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Prices & Currency */}
@@ -685,10 +721,10 @@ export function Modals() {
                 <Input
                   name="actualPrice"
                   className="placeholder:text-[#C4C4C4] placeholder:text-xs rounded-[5px]"
-                  type="number"
+                  type="text"
                   placeholder="Enter price"
                   value={actualPrice}
-                  onChange={(e) => setActualPrice(e.target.value)}
+                  onChange={handleActualPriceChange}
                   required
                 />
               </div>
@@ -699,10 +735,10 @@ export function Modals() {
                 <Input
                   name="discountPrice"
                   className="placeholder:text-[#C4C4C4] placeholder:text-xs rounded-[5px]"
-                  type="number"
+                  type="text"
                   placeholder="Enter discount price"
                   value={discountPrice}
-                  onChange={(e) => setDiscountPrice(e.target.value)}
+                  onChange={handleDiscountPriceChange}
                   required
                 />
               </div>
