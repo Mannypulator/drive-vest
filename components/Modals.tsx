@@ -162,13 +162,20 @@ export function Modals() {
     if (!file) return;
 
     // Validate file size (limit: 10MB)
-    if (file.size > 10 * 1024 * 1024) {
-      setVideoError("Video file must be less than 10MB.");
+    if (file.size > 50 * 1024 * 1024) {
+      setVideoError("Video file must be less than 50MB.");
       return;
     }
 
     // Validate file format
-    const validFormats = ["video/mp4", "video/mov", "video/avi", "video/mkv"];
+    const validFormats = [
+      "video/mp4",
+      "video/quicktime", // covers .mov
+      "video/x-msvideo", // covers .avi
+      "video/x-matroska", // covers .mkv
+      "video/H265", // rarely used but included for completeness
+      "video/hevc", // HEVC explicit type (not widely supported in MIME checks)
+    ];
     if (!validFormats.includes(file.type)) {
       setVideoError("Invalid format. Allowed formats: MP4, MOV, AVI, MKV.");
       return;
