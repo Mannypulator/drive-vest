@@ -11,29 +11,40 @@ type ModalType =
   | "password-change"
   | "success"
   | "reset-password"
-  | "add-post";
+  | "add-post"
+  | "edit-post";
 
 type ModalContextType = {
   activeModal: ModalType | null;
-  openModal: (type: ModalType) => void;
+  modalData: any;
+  openModal: (type: ModalType, data?: any) => void;
   closeModal: () => void;
 };
 
 const ModalContext = createContext<ModalContextType>({
   activeModal: null,
+  modalData: null,
   openModal: () => {},
   closeModal: () => {},
 });
 
 export function ModalProvider({ children }: { children: React.ReactNode }) {
   const [activeModal, setActiveModal] = useState<ModalType | null>(null);
+  const [modalData, setModalData] = useState<any>(null);
 
   return (
     <ModalContext.Provider
       value={{
         activeModal,
-        openModal: setActiveModal,
-        closeModal: () => setActiveModal(null),
+        modalData,
+        openModal: (type, data) => {
+          setActiveModal(type);
+          setModalData(data);
+        },
+        closeModal: () => {
+          setActiveModal(null);
+          setModalData(null);
+        },
       }}
     >
       {children}

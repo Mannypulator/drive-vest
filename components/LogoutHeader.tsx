@@ -38,7 +38,7 @@ const LogoutHeader = () => {
 
         <Button
           onClick={() => openModal("login")}
-          className={`${poppins.className} py-2 px-6 border border-[#E6B027] text-[#E6B027] rounded-lg`}
+          className={`${poppins.className} py-2 px-6 border bg-transparent border-[#E6B027] text-[#E6B027] rounded-lg`}
         >
           Log In
         </Button>

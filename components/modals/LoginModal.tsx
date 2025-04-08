@@ -80,53 +80,51 @@ const LoginModal: React.FC<LoginModalProps> = ({
         <div className="space-y-1">
           <div className="flex space-x-4">
             <div>
-              <Label className="text-xs font-normal text-[#0A0A0B]">
+              <Label className="text-xs font-normal text-text-primary">
                 Email*
               </Label>
               <Input
                 type="text"
                 placeholder="Enter your email address"
-                className="w-full px-4 py-2 border border-[#EAECF0] rounded-[5px] placeholder:text-[#9F9C9C] placeholder:text-xs placeholder:font-normal"
+                className="w-full px-4 py-2 border border-border-gray-100 rounded-[5px] placeholder:text-text-secondary placeholder:text-xs placeholder:font-normal"
               />
             </div>
             <div>
-              <Label className="text-xs font-normal text-[#0A0A0B]">
+              <Label className="text-xs font-normal text-text-primary">
                 Password*
               </Label>
               <Input
                 type="text"
                 placeholder="Enter your password"
-                className="w-full px-4 py-2 border border-[#EAECF0] rounded-[5px] placeholder:text-[#9F9C9C] placeholder:text-xs placeholder:font-normal"
+                className="w-full px-4 py-2 border border-border-gray-100 rounded-[5px] placeholder:text-text-secondary placeholder:text-xs placeholder:font-normal"
               />
             </div>
           </div>
           <div className="flex justify-between items-center">
             <div className="flex justify-center items-center space-x-2">
-              <Input type="checkbox" className="w-2 border-[#667085]" />
-              <Label className="text-xs text-[#667085]">Remember me</Label>
+              <Input type="checkbox" className="w-2 border-text-secondary" />
+              <Label className="text-xs text-text-secondary">Remember me</Label>
             </div>
-            <p className="text-xs text-[#667085]">
-              Forgot password?
-            </p>
+            <p className="text-xs text-text-secondary">Forgot password?</p>
           </div>
         </div>
         <DialogFooter>
           <div className="flex flex-col justify-center items-center w-full">
-            <Button className="w-full bg-yellow-600 font-semibold text-base text-white bg-[linear-gradient(97.73deg,_#E6B027_-6.96%,_#9E8441_23.5%,_#705614_92.79%)]">
+            <Button className="w-full bg-primary font-semibold text-base text-white">
               Log In
             </Button>
             <div className="text-center text-xs font-bold mt-4">
               Don&apos;t have an account?{" "}
               <span
                 onClick={onOpenSignUp}
-                className="font-bold text-[#E6B027] text-xs cursor-pointer border-none outline-none"
+                className="font-bold text-primary text-xs cursor-pointer border-none outline-none"
               >
                 create one
               </span>
             </div>
             <p className="mt-6 text-xs">
               By continuing, you agree to the Terms of Service
-              <br /> and acknowledge you’ve read our Privacy Policy.
+              <br /> and acknowledge you've read our Privacy Policy.
             </p>
           </div>
         </DialogFooter>

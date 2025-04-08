@@ -29,7 +29,7 @@ const LoginHeader = () => {
   console.log(session);
   return (
     <header
-      className={`${poppins.className} bg-[linear-gradient(219.84deg,_#474747_4.14%,_#222222_44.22%)] text-white py-4 px-24 flex justify-between items-center`}
+      className={`${poppins.className} bg-[linear-gradient(219.84deg,_var(--text-primary)_4.14%,_var(--text-secondary)_44.22%)] text-white py-4 px-24 flex justify-between items-center`}
     >
       <div className="flex items-center">
         {/* add link to image to go home page */}
@@ -46,13 +46,13 @@ const LoginHeader = () => {
       <div className="flex items-center space-x-6">
         <div className="relative">
           <Clock size={24} />
-          <span className="absolute top-0 right-0 text-xs bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
+          <span className="absolute top-0 right-0 text-xs bg-destructive text-white rounded-full w-5 h-5 flex items-center justify-center">
             12
           </span>
         </div>
         <div className="relative">
           <Bell size={24} />
-          <span className="absolute top-0 right-0 text-xs bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
+          <span className="absolute top-0 right-0 text-xs bg-destructive text-white rounded-full w-5 h-5 flex items-center justify-center">
             12
           </span>
         </div>

@@ -16,7 +16,7 @@ const poppins = Poppins({
 const Footer = () => {
   return (
     <footer
-      className={`${poppins.className} bg-[linear-gradient(219.84deg,_#474747_4.14%,_#222222_44.22%)] text-white mt-8`}
+      className={`${poppins.className} bg-[linear-gradient(219.84deg,_var(--text-primary)_4.14%,_var(--text-secondary)_44.22%)] text-white mt-8`}
     >
       <div className="container mx-auto py-8 px-2 sm:px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 font-normal text-lg text-center md:text-left">

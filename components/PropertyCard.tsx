@@ -1,73 +1,101 @@
 import { Poppins } from "next/font/google";
 import Image from "next/image";
 import React from "react";
-import love from "@/assets/images/love.svg";
+import { Bed, Bath, Ruler, MapPin, Banknote } from "lucide-react";
 import Link from "next/link";
+import { Property } from "@/types";
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: "400",
 });
 
-interface PropertyCardProps {
-  id: string;
-  price: string;
-  discount: string;
-  title: string;
-  location: string;
-  bed: number;
-  bath: number;
-  image: string;
-}
+const PropertyCard = ({ property }: { property: Property }) => {
+  console.log(property);
 
-const PropertyCard: React.FC<PropertyCardProps> = ({
-  id,
-  price,
-  discount,
-  title,
-  location,
-  bed,
-  bath,
-  image,
-}) => {
+  // get the rates displayed is returning undefined fix
+  const getRatesDisplayed = () => {
+    if (property.isForSale) {
+      return `$${property?.price?.toLocaleString()}`;
+    }
+    console.log(property.rates);
+    if (property?.rates?.monthly) {
+      return `$${property.rates.monthly.toLocaleString()}/mo`;
+    } else if (property?.rates?.weekly) {
+      return `$${property.rates.weekly.toLocaleString()}/wk`;
+    } else if (property?.rates?.nightly) {
+      return `$${property.rates.nightly.toLocaleString()}/night`;
+    }
+  };
+
   return (
-    <Link href={`/properties/${id}`} passHref>
-      <div
-        className={`${poppins.className} bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer transition-transform hover:scale-105`}
-      >
-        {/* Clickable Image */}
-        <div className="rounded-[10px]">
-          <Image
-            src={image}
-            alt={title}
-            width={48}
-            height={48}
-            className="w-full h-48 object-cover p-4"
-          />
+    <div className={`rounded-xl shadow-md relative ${poppins.className}`}>
+      <Link href={`/properties/${property?.id}`}>
+        <Image
+          src={property?.images[0] || "/images/placeholder.jpg"}
+          alt=""
+          height={0}
+          width={0}
+          sizes="100vw"
+          className="w-full h-auto rounded-t-xl"
+          priority={true}
+        />
+      </Link>
+      <div className="p-4">
+        <div className="text-left md:text-center lg:text-left mb-6">
+          <div className="text-primary">{property?.type}</div>
+          <h3 className="text-xl font-bold">{property?.name}</h3>
         </div>
-        <div className="p-4">
-          {/* Price, Discount, and Love Icon */}
-          <div className="flex items-center justify-between gap-x-6">
-            <div className="flex items-start gap-x-2">
-              <p className="text-xs sm:text-sm font-semibold text-[#E6B027]">
-                {price}
-              </p>
-              <p className="text-xs sm:text-sm font-semibold text-[#9F9C9C] line-through">
-                {discount}
-              </p>
-            </div>
-            <Image src={love} width={20} height={20} alt="love" />
-          </div>
-          <h3 className="text-xs sm:text-sm font-medium text-gray-900 mt-2 mb-4">
-            {title}
-          </h3>
-          <p className="text-xs sm:text-sm text-gray-600">
-            {bed} Beds • {bath} Baths
+        <h3 className="absolute top-[10px] right-[10px] bg-white px-4 py-2 rounded-lg text-main font-bold text-right md:text-center lg:text-right">
+          {getRatesDisplayed()}
+        </h3>
+
+        <div className="flex justify-center gap-4 text-secondary mb-4">
+          <p>
+            <Bed className="md:hidden lg:inline mr-2" size={16} />
+            {property?.beds}
+            <span className="md:hidden lg:inline"> Beds</span>
           </p>
-          <p className="text-xs sm:text-sm font-medium">{location}</p>
+          <p>
+            <Bath className="md:hidden lg:inline mr-2" size={16} />{" "}
+            {property?.baths}
+            <span className="md:hidden lg:inline"> Baths</span>
+          </p>
+          <p>
+            <Ruler className="md:hidden lg:inline  mr-2" size={16} />{" "}
+            {property?.squareFeet}
+            <span className="md:hidden lg:inline"> sqft</span>
+          </p>
+        </div>
+        {!property?.isForSale && (
+          <div className="flex justify-center gap-4 text-main text-sm mb-4">
+            <p>
+              <Banknote className="md:hidden lg:inline mr-2" /> Weekly
+            </p>
+            <p>
+              <Banknote className="md:hidden lg:inline mr-2" /> Monthly
+            </p>
+          </div>
+        )}
+
+        <div className="border border-gray-100 mb-5"></div>
+
+        <div className="flex flex-col lg:flex-row justify-between mb-4">
+          <div className="flex align-middle gap-2 mb-4 lg:mb-0">
+            <MapPin className="text-main mt-1" />
+            <span className="text-main">
+              {property?.location.city}, {property?.location.state}
+            </span>
+          </div>
+          <Link
+            href={`/properties/${property?.id}`}
+            className="h-[36px] bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-[5px] text-center text-sm"
+          >
+            Details
+          </Link>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

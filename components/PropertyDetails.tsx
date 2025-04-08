@@ -27,32 +27,32 @@ const PropertyDetails = ({ property }: { property?: Property }) => {
         </h3>
         <div className="flex flex-col md:flex-row justify-around">
           <div className="flex items-center justify-center mb-4 border-b border-gray-200 md:border-b-0 pb-4 md:pb-0">
-            <div className="text-gray-500 mr-2 font-bold">Nightly</div>
-            <div className="text-2xl font-bold text-[#E6B027]">
-              {property?.rates.nightly ? (
-                `$${property?.rates.nightly.toLocaleString()}`
+            <div className="text-text-secondary mr-2 font-bold">Nightly</div>
+            <div className="text-2xl font-bold text-primary">
+              {property?.rates?.nightly ? (
+                `$${property.rates.nightly.toLocaleString()}`
               ) : (
-                <Times className="text-red-700" />
+                <Times className="text-destructive" />
               )}
             </div>
           </div>
           <div className="flex items-center justify-center mb-4 border-b border-gray-200 md:border-b-0 pb-4 md:pb-0">
-            <div className="text-gray-500 mr-2 font-bold">Weekly</div>
-            <div className="text-2xl font-bold text-[#E6B027]">
-              {property?.rates.weekly ? (
-                `$${property?.rates.weekly.toLocaleString()}`
+            <div className="text-text-secondary mr-2 font-bold">Weekly</div>
+            <div className="text-2xl font-bold text-primary">
+              {property?.rates?.weekly ? (
+                `$${property.rates.weekly.toLocaleString()}`
               ) : (
-                <Times className="text-red-700" />
+                <Times className="text-destructive" />
               )}
             </div>
           </div>
           <div className="flex items-center justify-center mb-4 pb-4 md:pb-0">
-            <div className="text-gray-500 mr-2 font-bold">Monthly</div>
-            <div className="text-2xl font-bold text-[#E6B027]">
-              {property?.rates.monthly ? (
-                `$${property?.rates.monthly.toLocaleString()}`
+            <div className="text-text-secondary mr-2 font-bold">Monthly</div>
+            <div className="text-2xl font-bold text-primary">
+              {property?.rates?.monthly ? (
+                `$${property.rates.monthly.toLocaleString()}`
               ) : (
-                <Times className="text-red-700" />
+                <Times className="text-destructive" />
               )}
             </div>
           </div>

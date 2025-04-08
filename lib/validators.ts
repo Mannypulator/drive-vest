@@ -22,8 +22,6 @@ export const signUpFormSchema = z.object({
   password: z.string().min(7, "Password must be at least 7 characters"),
 });
 
-
-
 const LocationSchema = z.object({
   street: z.string().optional(),
   city: z.string().optional(),
@@ -45,27 +43,43 @@ const SellerInfoSchema = z.object({
   phone: z.string().optional(),
 });
 
-export const propertyCreateSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  type: z.string().min(1, "Type is required"),
-  description: z.string().optional(),
-  price: currency,
-  discount: currency,
-  beds: z.number().int().positive("Beds must be a positive integer"),
-  baths: z.number().int().positive("Baths must be a positive integer"),
-  squareFeet: z
-    .number()
-    .int()
-    .positive("Square feet must be a positive integer"),
-  amenities: z
-    .array(z.string().min(1))
-    .nonempty("At least one amenity is required"),
-  images: z
-    .array(z.string().url())
-    .nonempty("At least one image URL is required"),
-  videoUrl: z.string().url("Invalid video URL format"),
-  isFeatured: z.boolean().optional().default(false),
-  location: LocationSchema,
-  rates: RatesSchema,
-  sellerInfo: SellerInfoSchema,
-});
+export const propertyCreateSchema = z
+  .object({
+    name: z.string().min(1, "Name is required"),
+    type: z.string().min(1, "Type is required"),
+    description: z.string().optional(),
+    isForSale: z.boolean().default(true),
+    price: currency.optional(),
+    discount: currency.optional(),
+    beds: z.number().int().positive("Beds must be a positive integer"),
+    baths: z.number().int().positive("Baths must be a positive integer"),
+    squareFeet: z
+      .number()
+      .int()
+      .positive("Square feet must be a positive integer"),
+    amenities: z
+      .array(z.string().min(1))
+      .nonempty("At least one amenity is required"),
+    images: z
+      .array(z.string().url())
+      .nonempty("At least one image URL is required"),
+    videoUrl: z.string().url("Invalid video URL format"),
+    isFeatured: z.boolean().optional().default(false),
+    location: LocationSchema,
+    rates: RatesSchema.optional(),
+    sellerInfo: SellerInfoSchema.optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.isForSale) {
+        return !!data.price && !!data.sellerInfo;
+      } else {
+        return !!data.rates;
+      }
+    },
+    {
+      message:
+        "For sale properties must have price and seller info, rental properties must have rates",
+      path: ["isForSale"],
+    }
+  );

@@ -10,8 +10,6 @@ export default function Home() {
       <PropertyFilters />
       <NavTabs />
       <PropertyListings title={true} seeAllLink={true} />
-      <PropertyListings title={true} seeAllLink={true} />
-      <PropertyListings title={true} seeAllLink={true} />
     </>
   );
 }

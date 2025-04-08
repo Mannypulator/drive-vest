@@ -39,19 +39,9 @@ const PropertyListings: React.FC<PropertyListingsProps> = async ({
           </Link>
         )}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {latestProperties.map((property) => (
-          <PropertyCard
-            key={property.id}
-            id={property.id}
-            price={property.price.toString()}
-            discount={property.discount.toString()}
-            title={property.name}
-            bed={property.beds}
-            bath={property.baths}
-            location={`${property.location.city}, ${property.location.state}`}
-            image={property.images[0]}
-          />
+          <PropertyCard key={property.id} property={property} />
         ))}
       </div>
     </section>

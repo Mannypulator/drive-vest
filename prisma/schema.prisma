@@ -77,14 +77,15 @@ model VerificationToken {
 }
 
 model Property {
-  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  ownerId     String  @db.Uuid
-  owner       User    @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ownerId     String   @db.Uuid
+  owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   name        String
   type        String
   description String?
-  price       Decimal @db.Decimal(12, 2)
-  discount    Decimal @db.Decimal(12, 2)
+  isForSale   Boolean  @default(true)
+  price       Decimal? @db.Decimal(12, 2)
+  discount    Decimal? @db.Decimal(12, 2)
 
   location   Location @relation(fields: [locationId], references: [id])
   locationId String   @unique @db.Uuid
@@ -94,11 +95,11 @@ model Property {
   squareFeet Int
 
   amenities String[]
-  rates     Rates    @relation(fields: [ratesId], references: [id])
-  ratesId   String   @unique @db.Uuid
+  rates     Rates?   @relation(fields: [ratesId], references: [id])
+  ratesId   String?  @unique @db.Uuid
 
-  sellerInfo   SellerInfo @relation(fields: [sellerInfoId], references: [id])
-  sellerInfoId String     @unique @db.Uuid
+  sellerInfo   SellerInfo? @relation(fields: [sellerInfoId], references: [id])
+  sellerInfoId String?     @unique @db.Uuid
 
   images     String[]
   videoUrl   String

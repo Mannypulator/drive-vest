@@ -20,15 +20,15 @@ const ForgetPassordModal: React.FC<ForgetPassordModalProps> = ({
       description=""
     >
       <div>
-        <Label className="text-xs font-normal text-[#0A0A0B]">Email*</Label>
+        <Label className="text-xs font-normal text-text-primary">Email*</Label>
         <Input
           type="email"
           placeholder="Enter your email"
-          className="w-full px-4 py-2 border border-[#EAECF0] rounded-[5px] placeholder:text-[#9F9C9C] placeholder:text-xs placeholder:font-normal"
+          className="w-full px-4 py-2 border border-border-gray-100 rounded-[5px] placeholder:text-text-secondary placeholder:text-xs placeholder:font-normal"
         />
       </div>
       <div>
-        <Button className="w-full bg-yellow-600 font-semibold text-base text-white bg-[linear-gradient(97.73deg,_#E6B027_-6.96%,_#9E8441_23.5%,_#705614_92.79%)]">
+        <Button className="w-full bg-primary font-semibold text-base text-white">
           Send
         </Button>
       </div>

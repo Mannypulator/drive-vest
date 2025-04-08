@@ -121,16 +121,16 @@ const SignUpModal: React.FC<SignUpModalProps> = ({
             />
           </div>
           <div className="-mt-4">
-            <Label className="text-xs font-normal text-[#0A0A0B]">
+            <Label className="text-xs font-normal text-text-primary">
               Password*
             </Label>
             <Input
               type="text"
               placeholder="Enter your password"
-              className="w-full px-4 py-2 border border-[#EAECF0] rounded-[5px] placeholder:text-[#9F9C9C] placeholder:text-xs placeholder:font-normal -mt-2"
+              className="w-full px-4 py-2 border border-border-gray-100 rounded-[5px] placeholder:text-text-secondary placeholder:text-xs placeholder:font-normal -mt-2"
             />
           </div>
-          <p className={`${poppins.className} text-xs text-gray-500`}>
+          <p className={`${poppins.className} text-xs text-text-secondary`}>
             Password must have minimum 7 Characters
           </p>
         </div>
@@ -138,7 +138,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({
           <div className="flex flex-col justify-center items-center w-full">
             <Button
               onClick={() => (isOpen = false)}
-              className="w-full bg-yellow-600 font-semibold text-base text-white bg-[linear-gradient(97.73deg,_#E6B027_-6.96%,_#9E8441_23.5%,_#705614_92.79%)]"
+              className="w-full bg-primary font-semibold text-base text-white"
             >
               Sign Up
             </Button>
@@ -146,14 +146,14 @@ const SignUpModal: React.FC<SignUpModalProps> = ({
               Already have an account?{" "}
               <span
                 onClick={onOpenLogin}
-                className="font-bold text-[#E6B027] text-xs cursor-pointer"
+                className="font-bold text-primary text-xs cursor-pointer"
               >
                 Log In
               </span>
             </div>
             <p className="mt-6 text-xs">
               By continuing, you agree to the Terms of Service
-              <br /> and acknowledge you’ve read our Privacy Policy.
+              <br /> and acknowledge you've read our Privacy Policy.
             </p>
           </div>
         </DialogFooter>
