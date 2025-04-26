@@ -88,6 +88,16 @@ const LoginHeader = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white rounded-[5px] outline-none border-none">
             <DropdownMenuGroup>
+              <DropdownMenuItem className="cursor-pointer">
+                <Link href="/profile" className="w-full">
+                  Profile
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
+                <Link href="/properties/saved" className="w-full">
+                  Saved Properties
+                </Link>
+              </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer"
                 onClick={() => signOutUser()}
@@ -103,12 +113,12 @@ const LoginHeader = () => {
         </DropdownMenu>
 
         {/* Right button */}
-        <button
+        <Button
           className=" bg-[#E6B027] text-white py-2 px-6 rounded-[5px]"
           onClick={() => openModal("add-post")}
         >
           + Post
-        </button>
+        </Button>
       </div>
     </header>
   );

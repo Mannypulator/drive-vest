@@ -41,7 +41,7 @@ const PropertyPage = async (props: {
           <div className="grid grid-cols-1 md:grid-cols-[70%_30%] lg:grid-cols-[70%_30%] w-full gap-6">
             <PropertyDetails property={typedProperty} />
             <aside className="space-y-4">
-              <BookmarkButton />
+              <BookmarkButton property={typedProperty} />
               <ShareButtons property={typedProperty} />
               <PropertyContactForm property={typedProperty} />
             </aside>

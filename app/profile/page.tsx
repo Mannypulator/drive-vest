@@ -48,7 +48,7 @@ const ProfilePage = async () => {
               {properties.length === 0 ? (
                 <p>You have no property listings</p>
               ) : (
-                <ProfileProperties properties={properties as Property[]} />
+                <ProfileProperties properties={properties} />
               )}
             </div>
           </div>

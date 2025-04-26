@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { deletePropertyById } from "@/lib/actions/property.actions";
 import { Property } from "@/types";
 import { Button } from "./ui/button";
-import { useModal } from "./modal-context";
 
 interface ProfilePropertiesProps {
   properties: Property[];
@@ -16,7 +15,6 @@ const ProfileProperties = ({
   properties: initialProperties,
 }: ProfilePropertiesProps) => {
   const [properties, setProperties] = useState<Property[]>(initialProperties);
-  const { openModal } = useModal();
 
   const handleDeleteProperty = async (propertyId: string) => {
     const confirmed = window.confirm(
@@ -56,19 +54,19 @@ const ProfileProperties = ({
         </p>
       </div>
       <div className="mt-2">
-        <Button
+        <Link
+          href={`/properties/${property.id}/edit`}
           className="bg-blue-500 text-white px-3 py-3 rounded-md mr-2 hover:bg-blue-600"
-          onClick={() => openModal("edit-post", property.id)}
         >
           Edit
-        </Button>
-        <button
+        </Link>
+        <Button
           onClick={() => handleDeleteProperty(property.id)}
           className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600"
           type="button"
         >
           Delete
-        </button>
+        </Button>
       </div>
     </div>
   ));

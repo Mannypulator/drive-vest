@@ -2,9 +2,6 @@
 import { prisma } from "@/data/prisma";
 import { convertToPlainObject, formatError } from "../utils";
 import { Property } from "@/types";
-// import { PropertyCreateSchema } from "../validators";
-// import { z } from "zod";
-// import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import cloudinary from "../cloudinary";
@@ -15,6 +12,12 @@ import { toast } from "react-toastify";
 interface CloudinaryUploadResponse {
   secure_url: string;
   public_id: string;
+}
+
+interface SearchParams {
+  location?: string;
+  propertyType?: string;
+  priceMax?: string;
 }
 
 //Get latest properties
@@ -435,4 +438,86 @@ export async function editPropertyById(
     }
     return { success: false, message: formatError(error) };
   }
+}
+
+export async function searchProperties({
+  location = "",
+  propertyType = "All",
+  priceMax,
+}: SearchParams) {
+  const locFilter = location
+    ? {
+        OR: [
+          { name: { contains: location, mode: "insensitive" as const } },
+          { description: { contains: location, mode: "insensitive" as const } },
+          {
+            location: {
+              street: { contains: location, mode: "insensitive" as const },
+            },
+          },
+          {
+            location: {
+              city: { contains: location, mode: "insensitive" as const },
+            },
+          },
+          {
+            location: {
+              state: { contains: location, mode: "insensitive" as const },
+            },
+          },
+          {
+            location: {
+              zipcode: { contains: location, mode: "insensitive" as const },
+            },
+          },
+        ],
+      }
+    : {};
+
+  const typeFilter =
+    propertyType && propertyType !== "All"
+      ? { type: { equals: propertyType, mode: "insensitive" as const } }
+      : {};
+
+  // check for price if priceMax is not empty
+  let priceFilter = {};
+  if (priceMax) {
+    const max = parseFloat(priceMax);
+    if (!isNaN(max)) {
+      priceFilter = {
+        OR: [
+          {
+            isForSale: true,
+            price: {
+              lte: max,
+            },
+          },
+          {
+            isForSale: false,
+            rates: {
+              OR: [
+                { nightly: { lte: max } },
+                { weekly: { lte: max } },
+                { monthly: { lte: max } },
+              ],
+            },
+          },
+        ],
+      };
+    }
+  }
+
+  const properties = await prisma.property.findMany({
+    where: {
+      AND: [locFilter, typeFilter, ...(priceMax ? [priceFilter] : [])],
+    },
+    include: {
+      location: true,
+      rates: true,
+      owner: true,
+      sellerInfo: true,
+    },
+  });
+
+  return convertToPlainObject(properties);
 }

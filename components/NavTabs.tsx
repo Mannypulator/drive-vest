@@ -6,10 +6,13 @@ import React, { useState } from "react";
 const NavTabs = () => {
   const tabs = [
     "All",
-    "Featured Listings",
-    "Homes",
-    "Apartments & Offices",
-    "Land & Commercial Spaces",
+    "Apartment",
+    "Condo",
+    "House",
+    "Cabin or Cottage",
+    "Room",
+    "Studio",
+    "Other",
     "More",
   ];
 

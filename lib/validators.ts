@@ -49,8 +49,8 @@ export const propertyCreateSchema = z
     type: z.string().min(1, "Type is required"),
     description: z.string().optional(),
     isForSale: z.boolean().default(true),
-    price: currency.optional(),
-    discount: currency.optional(),
+    price: currency,
+    discount: currency,
     beds: z.number().int().positive("Beds must be a positive integer"),
     baths: z.number().int().positive("Baths must be a positive integer"),
     squareFeet: z

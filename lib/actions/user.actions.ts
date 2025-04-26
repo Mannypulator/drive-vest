@@ -2,9 +2,9 @@
 
 import { prisma } from "@/data/prisma";
 import { signInFormSchema, signUpFormSchema } from "../validators";
-import { signIn, signOut } from "@/auth";
+import { auth, signIn, signOut } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
-import { formatError } from "../utils";
+import { convertToPlainObject, formatError } from "../utils";
 import { hashSync } from "bcrypt-ts-edge";
 
 export async function signInWithCredentials(
@@ -81,4 +81,108 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
     }
     return { success: false, message: formatError(error) };
   }
+}
+
+export async function checkBookmarkStatus(propertyId: string) {
+  const session = await auth();
+  if (!session) {
+    return {
+      success: false,
+      message: "You must be logged in to bookmark a property",
+    };
+  }
+
+  const bookmark = await prisma.user.findUnique({
+    where: {
+      id: session?.user?.id,
+      bookmarks: {
+        some: {
+          id: propertyId,
+        },
+      },
+    },
+  });
+
+  return { success: true, isBookmarked: bookmark ? true : false };
+}
+
+export async function bookmarkProperty(propertyId: string) {
+  const session = await auth();
+  if (!session) {
+    return {
+      success: false,
+      message: "You must be logged in to bookmark a property",
+    };
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session?.user?.id,
+    },
+  });
+
+  if (!user) {
+    return { success: false, message: "User not found" };
+  }
+
+  const property = await prisma.property.findUnique({
+    where: {
+      id: propertyId,
+    },
+  });
+
+  if (!property) {
+    return { success: false, message: "Property not found" };
+  }
+
+  await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      bookmarks: {
+        connect: {
+          id: propertyId,
+        },
+      },
+    },
+  });
+
+  return { success: true, message: "Property bookmarked successfully" };
+}
+
+export async function getBookmarkedProperties() {
+  const session = await auth();
+  if (!session) {
+    return {
+      success: false,
+      message: "You must be logged in to view your bookmarks",
+    };
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session?.user?.id,
+    },
+    include: {
+      bookmarks: {
+        include: {
+          location: true,
+          rates: true,
+          sellerInfo: true,
+        },
+      },
+    },
+  });
+
+  console.log(user);
+
+  if (!user) {
+    return { success: false, message: "User not found" };
+  }
+
+  return {
+    success: true,
+    properties: convertToPlainObject(user.bookmarks),
+  };
 }
